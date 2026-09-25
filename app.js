@@ -213,7 +213,7 @@ document.querySelectorAll(".menu-item").forEach((item) => {
         document.querySelectorAll(".menu-item").forEach((i) => i.classList.remove("ativa"));
         item.classList.add("ativa");
         const secao = item.dataset.secao;
-        ["agenda", "agendar", "servicos", "clientes"].forEach((s) => {
+        ["agenda", "agendar", "servicos", "clientes", "perfil"].forEach((s) => {
             $("secao-" + s).classList.toggle("oculto", s !== secao);
         });
     });
@@ -225,8 +225,42 @@ document.querySelectorAll(".menu-item").forEach((item) => {
 
 // Carrega tudo ao entrar no dashboard.
 async function carregarTudo() {
-    await Promise.all([carregarAgenda(), carregarServicos(), carregarClientes()]);
+    await Promise.all([carregarAgenda(), carregarServicos(), carregarClientes(), carregarPerfil()]);
 }
+
+// ----- Meu perfil (nome, profissão, chave Pix) -----
+async function carregarPerfil() {
+    try {
+        const eu = await api("/profissionais/eu");
+        $("pf-nome").value = eu.nome || "";
+        $("pf-profissao").value = eu.profissao || "";
+        $("pf-pix").value = eu.chavePix || "";
+    } catch (err) {
+        // silencioso: se falhar, o usuário ainda pode preencher e salvar
+    }
+}
+
+// Salva o perfil (nome, profissão e chave Pix).
+$("form-perfil").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    mostrarMensagem("msg-perfil", "Salvando...", "");
+    try {
+        await api("/profissionais/eu", {
+            method: "PUT",
+            body: JSON.stringify({
+                nome: $("pf-nome").value.trim(),
+                profissao: $("pf-profissao").value.trim(),
+                chavePix: $("pf-pix").value.trim()
+            })
+        });
+        mostrarMensagem("msg-perfil", "Perfil salvo!", "sucesso");
+        // Atualiza o nome mostrado no topo.
+        $("nome-usuario").textContent = $("pf-nome").value.trim();
+        sessionStorage.setItem("nome", $("pf-nome").value.trim());
+    } catch (err) {
+        mostrarMensagem("msg-perfil", err.message, "erro");
+    }
+});
 
 // ----- Agenda -----
 async function carregarAgenda() {

@@ -89,6 +89,7 @@
                 <button class="menu-item" data-secao="agendar">Novo agendamento</button>
                 <button class="menu-item" data-secao="servicos">Serviços</button>
                 <button class="menu-item" data-secao="clientes">Clientes</button>
+                <button class="menu-item" data-secao="perfil">Meu perfil</button>
             </nav>
 
             <!-- Seção: Agenda -->
@@ -164,6 +165,26 @@
                     <p id="msg-cliente" class="mensagem"></p>
                 </form>
                 <div id="lista-clientes" class="lista"></div>
+            </div>
+
+            <!-- Seção: Meu perfil -->
+            <div id="secao-perfil" class="secao oculto">
+                <h2>Meu perfil</h2>
+                <form id="form-perfil" class="cartao form-vertical">
+                    <label>Nome
+                        <input type="text" id="pf-nome" placeholder="Seu nome">
+                    </label>
+                    <label>Profissão
+                        <input type="text" id="pf-profissao" placeholder="Ex: Cabeleireira">
+                    </label>
+                    <label>Chave Pix (para receber os pagamentos)
+                        <input type="text" id="pf-pix" placeholder="e-mail, telefone, CPF ou chave aleatória">
+                    </label>
+                    <p class="aviso">A chave Pix aparece para o cliente na confirmação do agendamento, para ele te
+                        pagar.</p>
+                    <button type="submit" class="btn-primario">Salvar</button>
+                    <p id="msg-perfil" class="mensagem"></p>
+                </form>
             </div>
 
         </section>

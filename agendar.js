@@ -241,6 +241,10 @@ $("btn-marcar").addEventListener("click", async () => {
         $("confirmacao-texto").textContent =
             `${resp.servico} com ${resp.profissional} em ${formatarDataHora(resp.inicio)}. ` +
             `Status: ${resp.status}. Você receberá a confirmação do profissional.`;
+
+        // Bloco de pagamento via Pix (se o profissional cadastrou a chave).
+        montarPagamento(resp);
+
         $("confirmacao").classList.remove("oculto");
         mostrarMensagem("", "");
         // Limpa os campos de dados do cliente e recarrega os horários
@@ -254,6 +258,64 @@ $("btn-marcar").addEventListener("click", async () => {
         mostrarMensagem(err.message, "erro");
     }
 });
+
+// -----------------------------------------------------------------------
+// Monta o bloco de pagamento na confirmação: mostra o valor e, se o
+// profissional tiver chave Pix cadastrada, a chave + botão para copiar.
+// -----------------------------------------------------------------------
+function montarPagamento(resp) {
+    const box = $("pagamento");
+    box.innerHTML = "";
+
+    const preco = resp.preco != null
+        ? Number(resp.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+        : null;
+
+    if (preco) {
+        const p = document.createElement("p");
+        p.className = "valor-pagamento";
+        p.textContent = "Valor: " + preco;
+        box.appendChild(p);
+    }
+
+    if (resp.chavePix) {
+        const instr = document.createElement("p");
+        instr.className = "secao-mini";
+        instr.textContent = "💸 Faça o Pix para confirmar seu horário:";
+        box.appendChild(instr);
+
+        const linha = document.createElement("div");
+        linha.className = "pix-linha";
+
+        const chave = document.createElement("code");
+        chave.className = "pix-chave";
+        chave.textContent = resp.chavePix;
+        linha.appendChild(chave);
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn-secundario";
+        btn.style.background = "var(--cor-primaria)";
+        btn.style.border = "none";
+        btn.textContent = "Copiar chave";
+        btn.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(resp.chavePix);
+                btn.textContent = "Copiado! ✅";
+                setTimeout(() => (btn.textContent = "Copiar chave"), 2000);
+            } catch {
+                btn.textContent = "Copie manualmente";
+            }
+        });
+        linha.appendChild(btn);
+        box.appendChild(linha);
+
+        const obs = document.createElement("p");
+        obs.className = "aviso";
+        obs.textContent = "Após o pagamento, o profissional confirmará seu agendamento.";
+        box.appendChild(obs);
+    }
+}
 
 // Botão "Marcar outro" esconde a confirmação.
 $("btn-novo").addEventListener("click", () => {

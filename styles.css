@@ -477,3 +477,41 @@ select:focus {
     color: #fff;
     border-color: var(--cor-primaria);
 }
+
+/* -----------------------------------------------------------------------
+   Bloco de pagamento via Pix (confirmação da página pública)
+   ----------------------------------------------------------------------- */
+
+.pagamento {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--cor-fundo);
+    border-radius: var(--raio);
+}
+
+.valor-pagamento {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cor-primaria-escura);
+    margin-bottom: 0.5rem;
+}
+
+.pix-linha {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0.5rem 0;
+}
+
+.pix-chave {
+    flex: 1;
+    min-width: 180px;
+    padding: 0.6rem 0.75rem;
+    background: #fff;
+    border: 1px dashed var(--cor-primaria);
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    word-break: break-all;
+}
