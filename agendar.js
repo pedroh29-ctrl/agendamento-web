@@ -125,10 +125,78 @@ async function carregarServicos(profissionalId) {
     }
 }
 
-// Ao trocar de profissional, recarrega os serviços dele.
+// Ao trocar de profissional, recarrega os serviços dele (e limpa horários).
 $("pub-profissional").addEventListener("change", (e) => {
     carregarServicos(e.target.value);
+    limparHorarios();
 });
+
+// Ao trocar o serviço ou a data, recarrega os horários disponíveis.
+$("pub-servico").addEventListener("change", carregarHorarios);
+$("pub-data").addEventListener("change", carregarHorarios);
+
+// Horário escolhido pelo cliente (preenchido ao clicar num botão).
+let horarioSelecionado = null;
+
+function limparHorarios() {
+    horarioSelecionado = null;
+    $("lista-horarios").innerHTML = "";
+    $("horarios-info").textContent = "Escolha uma data para ver os horários.";
+    $("horarios-info").classList.remove("oculto");
+}
+
+// -----------------------------------------------------------------------
+// Busca os horários livres para o profissional/serviço/data escolhidos e
+// mostra cada um como um botão clicável.
+// -----------------------------------------------------------------------
+async function carregarHorarios() {
+    const profissionalId = $("pub-profissional").value;
+    const servicoId = $("pub-servico").value;
+    const data = $("pub-data").value; // formato YYYY-MM-DD
+
+    horarioSelecionado = null;
+    const lista = $("lista-horarios");
+    const info = $("horarios-info");
+    lista.innerHTML = "";
+
+    if (!profissionalId || !servicoId || !data) {
+        info.textContent = "Escolha o serviço e a data para ver os horários.";
+        info.classList.remove("oculto");
+        return;
+    }
+
+    info.textContent = "Carregando horários...";
+    info.classList.remove("oculto");
+
+    try {
+        const horarios = await api(
+            `/publico/horarios?profissionalId=${profissionalId}&servicoId=${servicoId}&data=${data}`
+        );
+        if (!horarios.length) {
+            info.textContent = "Nenhum horário disponível nesse dia. Tente outra data.";
+            return;
+        }
+        info.classList.add("oculto");
+        horarios.forEach((iso) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "chip-horario";
+            // Mostra só a hora (HH:mm) no botão.
+            btn.textContent = new Date(iso).toLocaleTimeString("pt-BR", {
+                hour: "2-digit", minute: "2-digit"
+            });
+            btn.addEventListener("click", () => {
+                horarioSelecionado = iso;
+                document.querySelectorAll(".chip-horario").forEach((b) => b.classList.remove("ativa"));
+                btn.classList.add("ativa");
+                mostrarMensagem("", "");
+            });
+            lista.appendChild(btn);
+        });
+    } catch (err) {
+        info.textContent = err.message;
+    }
+}
 
 // -----------------------------------------------------------------------
 // Marcar o horário.
@@ -136,17 +204,16 @@ $("pub-profissional").addEventListener("change", (e) => {
 $("btn-marcar").addEventListener("click", async () => {
     const profissionalId = Number($("pub-profissional").value);
     const servicoId = Number($("pub-servico").value);
-    let inicio = $("pub-inicio").value;
 
     if (!profissionalId || !servicoId) {
         mostrarMensagem("Escolha o profissional e o serviço.", "erro");
         return;
     }
-    if (!inicio) {
-        mostrarMensagem("Escolha a data e hora.", "erro");
+    if (!horarioSelecionado) {
+        mostrarMensagem("Escolha um horário disponível.", "erro");
         return;
     }
-    if (inicio.length === 16) inicio += ":00"; // completa para ISO
+    const inicio = horarioSelecionado; // já vem no formato ISO da API
 
     const nome = $("pub-nome").value.trim();
     const email = $("pub-email").value.trim();
@@ -176,11 +243,13 @@ $("btn-marcar").addEventListener("click", async () => {
             `Status: ${resp.status}. Você receberá a confirmação do profissional.`;
         $("confirmacao").classList.remove("oculto");
         mostrarMensagem("", "");
-        // Limpa os campos de dados do cliente.
+        // Limpa os campos de dados do cliente e recarrega os horários
+        // (o horário marcado já não deve mais aparecer como livre).
         $("pub-nome").value = "";
         $("pub-email").value = "";
         $("pub-telefone").value = "";
         $("pub-obs").value = "";
+        carregarHorarios();
     } catch (err) {
         mostrarMensagem(err.message, "erro");
     }

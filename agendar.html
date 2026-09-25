@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marcar horário</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
     <!-- Overlay de carregamento -->
@@ -35,9 +37,15 @@
                 <select id="pub-servico" required></select>
             </label>
 
-            <label>Data e hora
-                <input type="datetime-local" id="pub-inicio" required>
+            <label>Data
+                <input type="date" id="pub-data" required>
             </label>
+
+            <div id="area-horarios">
+                <p class="secao-mini">Horários disponíveis</p>
+                <p id="horarios-info" class="vazio">Escolha uma data para ver os horários.</p>
+                <div id="lista-horarios" class="horarios"></div>
+            </div>
 
             <hr class="separador">
 
@@ -65,15 +73,18 @@
         <div id="confirmacao" class="cartao oculto">
             <h2>✅ Horário marcado!</h2>
             <p id="confirmacao-texto"></p>
-            <button id="btn-novo" class="btn-secundario" style="background: var(--cor-primaria); border: none;">Marcar outro</button>
+            <button id="btn-novo" class="btn-secundario" style="background: var(--cor-primaria); border: none;">Marcar
+                outro</button>
         </div>
 
     </main>
 
     <footer class="rodape">
-        <p>Powered by <a href="https://agendamento-api-i14n.onrender.com/swagger-ui.html" target="_blank" rel="noopener">Agendamento API</a></p>
+        <p>Powered by <a href="https://agendamento-api-i14n.onrender.com/swagger-ui.html" target="_blank"
+                rel="noopener">Agendamento API</a></p>
     </footer>
 
     <script src="agendar.js"></script>
 </body>
+
 </html>
