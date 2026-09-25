@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcar horário</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Overlay de carregamento -->
+    <div id="carregando" class="overlay oculto">
+        <div class="spinner"></div>
+        <p id="carregando-texto">Carregando...</p>
+    </div>
+
+    <header class="topo">
+        <div class="topo-conteudo">
+            <div class="topo-titulo">
+                <h1>📅 Marcar horário</h1>
+                <span class="subtitulo">Escolha o profissional, o serviço e o horário</span>
+            </div>
+            <a href="index.html" class="btn-secundario">Sou profissional</a>
+        </div>
+    </header>
+
+    <main class="conteudo">
+
+        <div class="cartao form-vertical">
+            <label>Profissional
+                <select id="pub-profissional" required></select>
+            </label>
+
+            <label>Serviço
+                <select id="pub-servico" required></select>
+            </label>
+
+            <label>Data e hora
+                <input type="datetime-local" id="pub-inicio" required>
+            </label>
+
+            <hr class="separador">
+
+            <p class="secao-mini">Seus dados</p>
+            <label>Nome
+                <input type="text" id="pub-nome" required placeholder="Seu nome">
+            </label>
+            <div class="linha">
+                <label>E-mail
+                    <input type="email" id="pub-email" required placeholder="voce@email.com">
+                </label>
+                <label>Telefone
+                    <input type="text" id="pub-telefone" required placeholder="11999998888">
+                </label>
+            </div>
+            <label>Observações (opcional)
+                <input type="text" id="pub-obs" placeholder="Alguma preferência?">
+            </label>
+
+            <button id="btn-marcar" class="btn-primario">Marcar horário</button>
+            <p id="msg-pub" class="mensagem"></p>
+        </div>
+
+        <!-- Confirmação (aparece após marcar) -->
+        <div id="confirmacao" class="cartao oculto">
+            <h2>✅ Horário marcado!</h2>
+            <p id="confirmacao-texto"></p>
+            <button id="btn-novo" class="btn-secundario" style="background: var(--cor-primaria); border: none;">Marcar outro</button>
+        </div>
+
+    </main>
+
+    <footer class="rodape">
+        <p>Powered by <a href="https://agendamento-api-i14n.onrender.com/swagger-ui.html" target="_blank" rel="noopener">Agendamento API</a></p>
+    </footer>
+
+    <script src="agendar.js"></script>
+</body>
+</html>

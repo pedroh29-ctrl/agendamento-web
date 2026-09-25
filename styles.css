@@ -422,3 +422,25 @@ select:focus {
         transform: rotate(360deg);
     }
 }
+
+/* -----------------------------------------------------------------------
+   Página pública de agendamento
+   ----------------------------------------------------------------------- */
+
+.separador {
+    border: none;
+    border-top: 1px solid var(--cor-borda);
+    margin: 0.5rem 0;
+}
+
+.secao-mini {
+    font-weight: 600;
+    color: var(--cor-texto);
+    font-size: 0.95rem;
+}
+
+/* Link "Sou profissional" no topo da página pública */
+.topo a.btn-secundario {
+    text-decoration: none;
+    display: inline-block;
+}
