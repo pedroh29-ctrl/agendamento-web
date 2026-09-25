@@ -1,5 +1,6 @@
 # Arquivos temporarios e de log
 *.txt
+*.log
 !requirements.txt
 
 # Editores / IDE
