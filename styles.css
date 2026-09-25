@@ -1,0 +1,332 @@
+/* -----------------------------------------------------------------------
+   Estilos do frontend da Agenda do Freelancer.
+   Visual limpo, responsivo, com tema em tons de roxo/índigo.
+   ----------------------------------------------------------------------- */
+
+:root {
+    --cor-primaria: #6366f1;
+    --cor-primaria-escura: #4f46e5;
+    --cor-fundo: #f5f6fa;
+    --cor-cartao: #ffffff;
+    --cor-texto: #1f2937;
+    --cor-texto-suave: #6b7280;
+    --cor-borda: #e5e7eb;
+    --cor-sucesso: #059669;
+    --cor-erro: #dc2626;
+    --sombra: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --raio: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* Cabeçalho */
+.topo {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    padding: 1rem 0;
+    box-shadow: var(--sombra);
+}
+
+.topo-conteudo {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topo h1 {
+    font-size: 1.25rem;
+}
+
+.area-usuario {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+}
+
+/* Conteúdo principal */
+.conteudo {
+    flex: 1;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+/* Cartões */
+.cartao {
+    background: var(--cor-cartao);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 1.5rem;
+}
+
+.cartao-auth {
+    max-width: 420px;
+    margin: 2rem auto;
+}
+
+/* Abas (login/registro) */
+.abas {
+    display: flex;
+    margin-bottom: 1.25rem;
+    border-bottom: 2px solid var(--cor-borda);
+}
+
+.aba {
+    flex: 1;
+    padding: 0.6rem;
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: var(--cor-texto-suave);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.aba.ativa {
+    color: var(--cor-primaria);
+    border-bottom-color: var(--cor-primaria);
+    font-weight: 600;
+}
+
+/* Formulários */
+.form-auth, .form-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--cor-texto-suave);
+    font-weight: 500;
+}
+
+input, select {
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--cor-texto);
+    background: #fff;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.linha {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.linha label {
+    flex: 1;
+    min-width: 140px;
+}
+
+/* Botões */
+.btn-primario, .btn-secundario {
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    font-weight: 500;
+    transition: background 0.15s, opacity 0.15s;
+}
+
+.btn-primario {
+    background: var(--cor-primaria);
+    color: #fff;
+}
+
+.btn-primario:hover {
+    background: var(--cor-primaria-escura);
+}
+
+.btn-secundario {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-secundario:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Menu do dashboard */
+.menu {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.menu-item {
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border: 1px solid var(--cor-borda);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--cor-texto-suave);
+}
+
+.menu-item.ativa {
+    background: var(--cor-primaria);
+    color: #fff;
+    border-color: var(--cor-primaria);
+}
+
+/* Seções */
+.secao-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.secao-cabecalho .btn-secundario {
+    background: var(--cor-primaria);
+    color: #fff;
+    border: none;
+}
+
+.secao h2 {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.form-vertical {
+    margin-bottom: 1.5rem;
+}
+
+/* Listas */
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.item {
+    background: #fff;
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.item-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.item-info strong {
+    display: block;
+    font-size: 1rem;
+}
+
+.item-info small {
+    color: var(--cor-texto-suave);
+}
+
+.item-acoes {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.item-acoes button {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--cor-borda);
+    background: #fff;
+    cursor: pointer;
+    color: var(--cor-texto);
+}
+
+.item-acoes button:hover {
+    background: var(--cor-fundo);
+}
+
+/* Etiquetas de status */
+.status {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-PENDENTE   { background: #fef3c7; color: #92400e; }
+.status-CONFIRMADO { background: #dbeafe; color: #1e40af; }
+.status-CONCLUIDO  { background: #d1fae5; color: #065f46; }
+.status-CANCELADO  { background: #fee2e2; color: #991b1b; }
+
+/* Mensagens */
+.mensagem {
+    font-size: 0.85rem;
+    min-height: 1.2rem;
+}
+
+.mensagem.sucesso { color: var(--cor-sucesso); }
+.mensagem.erro    { color: var(--cor-erro); }
+
+.vazio {
+    color: var(--cor-texto-suave);
+    font-style: italic;
+    padding: 1rem 0;
+}
+
+/* Rodapé */
+.rodape {
+    text-align: center;
+    padding: 1.25rem;
+    color: var(--cor-texto-suave);
+    font-size: 0.85rem;
+}
+
+.rodape a {
+    color: var(--cor-primaria);
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .topo h1 { font-size: 1.05rem; }
+    .linha { flex-direction: column; }
+}

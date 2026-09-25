@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda do Freelancer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="topo">
+        <div class="topo-conteudo">
+            <h1>📅 Agenda do Freelancer</h1>
+            <div id="area-usuario" class="area-usuario oculto">
+                <span id="nome-usuario"></span>
+                <button id="btn-sair" class="btn-secundario">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="conteudo">
+
+        <!-- ============================================================ -->
+        <!-- TELA DE LOGIN / REGISTRO                                      -->
+        <!-- ============================================================ -->
+        <section id="tela-login" class="tela">
+            <div class="cartao cartao-auth">
+                <!-- Abas: Entrar / Criar conta -->
+                <div class="abas">
+                    <button class="aba ativa" data-aba="entrar">Entrar</button>
+                    <button class="aba" data-aba="registrar">Criar conta</button>
+                </div>
+
+                <!-- Formulário de login -->
+                <form id="form-login" class="form-auth">
+                    <label>E-mail
+                        <input type="email" id="login-email" required placeholder="voce@exemplo.com">
+                    </label>
+                    <label>Senha
+                        <input type="password" id="login-senha" required placeholder="sua senha">
+                    </label>
+                    <button type="submit" class="btn-primario">Entrar</button>
+                </form>
+
+                <!-- Formulário de registro (escondido por padrão) -->
+                <form id="form-registro" class="form-auth oculto">
+                    <label>Nome
+                        <input type="text" id="reg-nome" required placeholder="Seu nome">
+                    </label>
+                    <label>Profissão
+                        <input type="text" id="reg-profissao" placeholder="Ex: Cabeleireira">
+                    </label>
+                    <label>E-mail
+                        <input type="email" id="reg-email" required placeholder="voce@exemplo.com">
+                    </label>
+                    <label>Senha (mínimo 6 caracteres)
+                        <input type="password" id="reg-senha" required minlength="6" placeholder="crie uma senha">
+                    </label>
+                    <button type="submit" class="btn-primario">Criar conta</button>
+                </form>
+
+                <p id="msg-auth" class="mensagem"></p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- DASHBOARD (aparece após login)                               -->
+        <!-- ============================================================ -->
+        <section id="tela-dashboard" class="tela oculto">
+
+            <!-- Navegação entre seções -->
+            <nav class="menu">
+                <button class="menu-item ativa" data-secao="agenda">Agenda</button>
+                <button class="menu-item" data-secao="agendar">Novo agendamento</button>
+                <button class="menu-item" data-secao="servicos">Serviços</button>
+                <button class="menu-item" data-secao="clientes">Clientes</button>
+            </nav>
+
+            <!-- Seção: Agenda -->
+            <div id="secao-agenda" class="secao">
+                <div class="secao-cabecalho">
+                    <h2>Minha agenda</h2>
+                    <button id="btn-atualizar-agenda" class="btn-secundario">Atualizar</button>
+                </div>
+                <div id="lista-agenda" class="lista"></div>
+            </div>
+
+            <!-- Seção: Novo agendamento -->
+            <div id="secao-agendar" class="secao oculto">
+                <h2>Novo agendamento</h2>
+                <form id="form-agendamento" class="cartao form-vertical">
+                    <label>Cliente
+                        <select id="ag-cliente" required></select>
+                    </label>
+                    <label>Serviço
+                        <select id="ag-servico" required></select>
+                    </label>
+                    <label>Início (data e hora)
+                        <input type="datetime-local" id="ag-inicio" required>
+                    </label>
+                    <label>Observações (opcional)
+                        <input type="text" id="ag-obs" placeholder="Ex: primeira vez">
+                    </label>
+                    <button type="submit" class="btn-primario">Agendar</button>
+                    <p id="msg-agendamento" class="mensagem"></p>
+                </form>
+            </div>
+
+            <!-- Seção: Serviços -->
+            <div id="secao-servicos" class="secao oculto">
+                <h2>Serviços</h2>
+                <form id="form-servico" class="cartao form-vertical">
+                    <div class="linha">
+                        <label>Nome
+                            <input type="text" id="sv-nome" required placeholder="Ex: Corte de cabelo">
+                        </label>
+                        <label>Duração (min)
+                            <input type="number" id="sv-duracao" required min="1" placeholder="45">
+                        </label>
+                        <label>Preço (R$)
+                            <input type="number" id="sv-preco" required min="0" step="0.01" placeholder="50.00">
+                        </label>
+                    </div>
+                    <label>Descrição (opcional)
+                        <input type="text" id="sv-descricao" placeholder="Ex: corte feminino">
+                    </label>
+                    <button type="submit" class="btn-primario">Adicionar serviço</button>
+                    <p id="msg-servico" class="mensagem"></p>
+                </form>
+                <div id="lista-servicos" class="lista"></div>
+            </div>
+
+            <!-- Seção: Clientes -->
+            <div id="secao-clientes" class="secao oculto">
+                <h2>Clientes</h2>
+                <form id="form-cliente" class="cartao form-vertical">
+                    <div class="linha">
+                        <label>Nome
+                            <input type="text" id="cl-nome" required placeholder="Ex: Maria Silva">
+                        </label>
+                        <label>Telefone
+                            <input type="text" id="cl-telefone" required placeholder="11999998888">
+                        </label>
+                    </div>
+                    <label>E-mail
+                        <input type="email" id="cl-email" required placeholder="maria@email.com">
+                    </label>
+                    <button type="submit" class="btn-primario">Adicionar cliente</button>
+                    <p id="msg-cliente" class="mensagem"></p>
+                </form>
+                <div id="lista-clientes" class="lista"></div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <p>Consome a <a href="https://agendamento-api-i14n.onrender.com/swagger-ui.html" target="_blank" rel="noopener">Agendamento API</a> · projeto de portfólio</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
