@@ -33,6 +33,26 @@ function limparSessao() {
 }
 
 // -----------------------------------------------------------------------
+// Overlay de carregamento: mostra um spinner enquanto a API responde.
+// Conta chamadas em andamento para não esconder cedo demais.
+// -----------------------------------------------------------------------
+let chamadasEmAndamento = 0;
+
+function mostrarCarregando(texto) {
+    chamadasEmAndamento++;
+    const el = document.getElementById("carregando");
+    if (texto) document.getElementById("carregando-texto").textContent = texto;
+    el.classList.remove("oculto");
+}
+
+function esconderCarregando() {
+    chamadasEmAndamento = Math.max(0, chamadasEmAndamento - 1);
+    if (chamadasEmAndamento === 0) {
+        document.getElementById("carregando").classList.add("oculto");
+    }
+}
+
+// -----------------------------------------------------------------------
 // Chamada genérica à API. Adiciona o header de autenticação (se houver) e
 // trata os erros mais comuns, devolvendo uma mensagem amigável.
 // -----------------------------------------------------------------------
@@ -43,7 +63,13 @@ async function api(caminho, opcoes = {}) {
     const auth = obterAuth();
     if (auth) headers["Authorization"] = auth;
 
-    const resposta = await fetch(API_BASE + caminho, { ...opcoes, headers });
+    mostrarCarregando(opcoes.textoCarregando);
+    let resposta;
+    try {
+        resposta = await fetch(API_BASE + caminho, { ...opcoes, headers });
+    } finally {
+        esconderCarregando();
+    }
 
     // 204 = sem conteúdo (ex: DELETE); devolve null.
     if (resposta.status === 204) return null;
@@ -140,7 +166,7 @@ $("form-login").addEventListener("submit", async (e) => {
 
     salvarSessao(montarAuth(email, senha), "");
     try {
-        const eu = await api("/profissionais/eu");
+        const eu = await api("/profissionais/eu", { textoCarregando: "Entrando... (pode levar até 1 min no primeiro acesso)" });
         salvarSessao(montarAuth(email, senha), eu.nome);
         mostrarMensagem("msg-auth", "", "");
         irParaDashboard();
@@ -162,7 +188,8 @@ $("form-registro").addEventListener("submit", async (e) => {
     try {
         await api("/profissionais/registrar", {
             method: "POST",
-            body: JSON.stringify({ nome, profissao, email, senha })
+            body: JSON.stringify({ nome, profissao, email, senha }),
+            textoCarregando: "Criando conta... (pode levar até 1 min no primeiro acesso)"
         });
         // Conta criada: autentica e entra.
         salvarSessao(montarAuth(email, senha), nome);

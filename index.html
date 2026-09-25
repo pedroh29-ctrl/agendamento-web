@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda do Freelancer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
+    <!-- Overlay de carregamento (aparece durante chamadas à API) -->
+    <div id="carregando" class="overlay oculto">
+        <div class="spinner"></div>
+        <p id="carregando-texto">Carregando...</p>
+    </div>
 
     <!-- Cabeçalho -->
     <header class="topo">
         <div class="topo-conteudo">
-            <h1>📅 Agenda do Freelancer</h1>
+            <div class="topo-titulo">
+                <h1>📅 Agenda do Freelancer</h1>
+                <span class="subtitulo">Organize seus clientes, serviços e horários</span>
+            </div>
             <div id="area-usuario" class="area-usuario oculto">
                 <span id="nome-usuario"></span>
                 <button id="btn-sair" class="btn-secundario">Sair</button>
@@ -26,6 +37,7 @@
         <!-- ============================================================ -->
         <section id="tela-login" class="tela">
             <div class="cartao cartao-auth">
+                <p class="boas-vindas">Bem-vindo! Crie sua conta ou entre para gerenciar sua agenda.</p>
                 <!-- Abas: Entrar / Criar conta -->
                 <div class="abas">
                     <button class="aba ativa" data-aba="entrar">Entrar</button>
@@ -61,6 +73,8 @@
                 </form>
 
                 <p id="msg-auth" class="mensagem"></p>
+                <p class="aviso">⏳ O primeiro acesso pode levar até 1 minuto enquanto o servidor "acorda". É normal,
+                    aguarde.</p>
             </div>
         </section>
 
@@ -156,9 +170,11 @@
     </main>
 
     <footer class="rodape">
-        <p>Consome a <a href="https://agendamento-api-i14n.onrender.com/swagger-ui.html" target="_blank" rel="noopener">Agendamento API</a> · projeto de portfólio</p>
+        <p>Consome a <a href="https://agendamento-api-i14n.onrender.com/swagger-ui.html" target="_blank"
+                rel="noopener">Agendamento API</a> · projeto de portfólio</p>
     </footer>
 
     <script src="app.js"></script>
 </body>
+
 </html>
